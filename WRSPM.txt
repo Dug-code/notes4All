@@ -21,3 +21,7 @@ Tools to support the process of taking notes
 
 Program and Hardware
 This program will be developed using java and java based frameworks. It will also use Firebase to host and warehouse the applications data.
+
+Meeting Times
+Meeting times are after class on Monday and Wednesday.
+We are also meeting via Discord when the group has available time.
