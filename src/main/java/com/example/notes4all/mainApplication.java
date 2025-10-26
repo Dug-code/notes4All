@@ -1,4 +1,3 @@
-//Group
 package com.example.notes4all;
 
 import javafx.application.Application;
@@ -11,9 +10,9 @@ import java.io.IOException;
 public class mainApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(mainApplication.class.getResource("welcome-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
-        stage.setTitle("Welcome!");
+        FXMLLoader fxmlLoader = new FXMLLoader(mainApplication.class.getResource("login-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 400, 300);
+        stage.setTitle("Login - Notes4All");
         stage.setScene(scene);
         stage.show();
     }

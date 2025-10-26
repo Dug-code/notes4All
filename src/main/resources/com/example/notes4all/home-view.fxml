@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.notes4all.homeController"
+            prefWidth="500" prefHeight="350">
+
+    <VBox alignment="CENTER" spacing="20"
+          AnchorPane.topAnchor="20.0"
+          AnchorPane.leftAnchor="20.0"
+          AnchorPane.rightAnchor="20.0">
+        <Label text="Welcome to Notes4All!" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+        <Label fx:id="welcomeLabel" text="User: " style="-fx-font-size: 16px;"/>
+
+        <Button text="Open Notes" onAction="#onOpenNotesClick"/>
+        <Button text="Logout" onAction="#onLogoutButtonClick"/>
+    </VBox>
+</AnchorPane>
+

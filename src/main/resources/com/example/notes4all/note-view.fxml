@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.notes4all.noteController"
+            prefWidth="800" prefHeight="500">
+
+    <top>
+        <ToolBar>
+            <Button text="New Note" onAction="#onNewNoteClick"/>
+            <Button text="Save Note" onAction="#onSaveNoteClick"/>
+            <Separator orientation="VERTICAL"/>
+            <Button text="Clear Drawing" onAction="#onClearDrawingClick"/>
+            <Button text="Save Drawing" onAction="#onSaveDrawingClick"/>
+        </ToolBar>
+    </top>
+
+    <center>
+        <SplitPane dividerPositions="0.5">
+            <!-- Text area -->
+            <TextArea fx:id="noteArea" promptText="Write your notes here..." wrapText="true"/>
+
+            <!-- Drawing canvas -->
+            <AnchorPane>
+                <Canvas fx:id="drawCanvas" width="400" height="400" />
+            </AnchorPane>
+        </SplitPane>
+    </center>
+</BorderPane>
+
