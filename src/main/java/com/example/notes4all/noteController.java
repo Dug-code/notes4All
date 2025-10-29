@@ -71,7 +71,7 @@ public class noteController {
         gc.clearRect(0, 0, drawCanvas.getWidth(), drawCanvas.getHeight());
     }
 
-    // Save drawing as PNG
+    // Save drawing as PNG needs to be fixed or function removed
     @FXML
     protected void onSaveDrawingClick() {
         showAlert("Drawing save is disabled (SwingFXUtils removed).");
