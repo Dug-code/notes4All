@@ -8,7 +8,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.image.WritableImage;
-import javafx.embed.swing.SwingFXUtils;
+
 
 import javax.imageio.ImageIO;
 import java.io.File;
@@ -74,15 +74,9 @@ public class noteController {
     // Save drawing as PNG
     @FXML
     protected void onSaveDrawingClick() {
-        WritableImage image = drawCanvas.snapshot(null, null);
-        File file = new File("drawing.png");
-        try {
-            ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
-            showAlert("Drawing saved as drawing.png!");
-        } catch (IOException e) {
-            showAlert("Error saving drawing: " + e.getMessage());
-        }
+        showAlert("Drawing save is disabled (SwingFXUtils removed).");
     }
+
 
     // Helper to show messages
     private void showAlert(String message) {
