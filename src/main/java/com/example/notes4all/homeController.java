@@ -12,6 +12,8 @@ public class homeController {
     @FXML
     private Label welcomeLabel;
 
+    private String currentUsername;
+
     public void setUser(String username) {
         welcomeLabel.setText("User: " + username);
     }
@@ -34,6 +36,21 @@ public class homeController {
         noteStage.setTitle("Notes - Notes4All");
         noteStage.setScene(scene);
         noteStage.show();
+    }
+
+    @FXML
+    protected void onOpenProfileClick() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("profile-view.fxml"));
+        Scene scene = new Scene(loader.load(), 500, 400);
+
+        // Get the controller and pass the username
+        profileController controller = loader.getController();
+        controller.setUserData(currentUsername);
+
+        Stage profileStage = new Stage();
+        profileStage.setTitle("Profile - Notes4All");
+        profileStage.setScene(scene);
+        profileStage.show();
     }
 }
 
