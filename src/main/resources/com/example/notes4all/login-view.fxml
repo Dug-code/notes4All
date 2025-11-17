@@ -13,7 +13,7 @@
           AnchorPane.bottomAnchor="50.0">
         <Label text="Notes4All Login" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
 
-        <TextField fx:id="usernameField" promptText="Username" maxWidth="200"/>
+        <TextField fx:id="emailField" promptText="Email" maxWidth="200"/>
 
         <PasswordField fx:id="passwordField" promptText="Password" maxWidth="200"/>
 

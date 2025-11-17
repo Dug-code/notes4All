@@ -12,31 +12,31 @@ import java.io.IOException;
 public class loginController {
 
     @FXML
-    private TextField usernameField;
+    private TextField emailField;
 
     @FXML
     private PasswordField passwordField;
 
     @FXML
     protected void onLoginButtonClick() throws IOException {
-        String username = usernameField.getText();
+        String email = emailField.getText();
         String password = passwordField.getText();
 
-        if (username.equals("admin") && password.equals("1234")) {
+        if (email.equals("admin") && password.equals("1234")) {
             // Load home page
             FXMLLoader loader = new FXMLLoader(getClass().getResource("home-view.fxml"));
             Scene scene = new Scene(loader.load(), 500, 350);
 
             // Get the controller and pass the username
             homeController controller = loader.getController();
-            controller.setUser(username);
+            controller.setUser(email);
 
             // Switch the stage to home
-            Stage stage = (Stage) usernameField.getScene().getWindow();
+            Stage stage = (Stage) emailField.getScene().getWindow();
             stage.setScene(scene);
             stage.setTitle("Home - Notes4All");
         } else {
-            showAlert(Alert.AlertType.ERROR, "Login Failed", "Invalid username or password.");
+            showAlert(Alert.AlertType.ERROR, "Login Failed", "Invalid email or password.");
         }
     }
 
@@ -47,5 +47,7 @@ public class loginController {
         alert.setContentText(message);
         alert.showAndWait();
     }
+
+
 }
 
