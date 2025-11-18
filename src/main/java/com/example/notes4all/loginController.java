@@ -59,9 +59,9 @@ public class loginController {
 
     private boolean registerUser() {
         UserRecord.CreateRequest request = new UserRecord.CreateRequest()
-                .setEmail("user222@example.com")
+                .setEmail(emailField.getText())
                 .setEmailVerified(false)
-                .setPassword("secretPassword")
+                .setPassword(passwordField.getText())
                 .setDisplayName("John Doe")
                 .setDisabled(false);
 
