@@ -1,24 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.notes4all.loginController"
-            prefWidth="400" prefHeight="300">
+<AnchorPane prefHeight="300" prefWidth="400" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/17.0.12" fx:controller="com.example.notes4all.loginController">
 
-    <VBox alignment="CENTER" spacing="10" AnchorPane.topAnchor="50.0"
-          AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0"
-          AnchorPane.bottomAnchor="50.0">
-        <Label text="Notes4All Login" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+    <VBox alignment="CENTER" spacing="10" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="50.0">
+        <Label style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Notes4All Login" />
 
-        <TextField fx:id="emailField" promptText="Email" maxWidth="200"/>
+        <TextField fx:id="emailField" maxWidth="200" promptText="Email" />
 
-        <PasswordField fx:id="passwordField" promptText="Password" maxWidth="200"/>
+        <PasswordField fx:id="passwordField" maxWidth="200" promptText="Password" />
 
-        <Button text="Login" onAction="#onLoginButtonClick" maxWidth="200"/>
+        <Button maxWidth="200" onAction="#onLoginButtonClick" text="Login" />
 
-        <Label text="Use admin / 1234 to login" style="-fx-font-size: 10px; -fx-text-fill: gray;"/>
+        <Button maxWidth="200" onAction="#onRegisterButtonClick" text="Register" />
+
+        <Label style="-fx-font-size: 10px; -fx-text-fill: gray;" text="Use admin / 1234 to login" />
     </VBox>
 </AnchorPane>

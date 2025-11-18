@@ -1,5 +1,8 @@
 package com.example.notes4all;
 
+import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.UserRecord;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -49,5 +52,34 @@ public class loginController {
     }
 
 
-}
+    @FXML
+    void onRegisterButtonClick(ActionEvent event) {
+        registerUser();
+    }
+
+    private boolean registerUser() {
+        UserRecord.CreateRequest request = new UserRecord.CreateRequest()
+                .setEmail("user222@example.com")
+                .setEmailVerified(false)
+                .setPassword("secretPassword")
+                .setDisplayName("John Doe")
+                .setDisabled(false);
+
+        UserRecord userRecord;
+        try {
+            userRecord = mainApplication.fauth.createUser(request);
+            System.out.println("Successfully created new user with Firebase Uid: " + userRecord.getUid()
+                    + " check Firebase > Authentication > Users tab");
+            return true;
+
+        } catch (FirebaseAuthException ex) {
+            // Logger.getLogger(FirestoreContext.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Error creating a new user in the firebase");
+            return false;
+        }
+    }
+
+
+
+    }
 
