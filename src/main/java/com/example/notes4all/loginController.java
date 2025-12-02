@@ -20,12 +20,16 @@ public class loginController {
     @FXML
     private PasswordField passwordField;
 
+
     @FXML
     protected void onLoginButtonClick() throws IOException {
         String email = emailField.getText();
         String password = passwordField.getText();
 
-        if (email.equals("admin") && password.equals("1234")) {
+        // Static users for testing
+        if ((email.equals("admin") && password.equals("1234")) ||
+                (email.equals("testuser") && password.equals("abcd"))) {
+
             // Load home page
             FXMLLoader loader = new FXMLLoader(getClass().getResource("home-view.fxml"));
             Scene scene = new Scene(loader.load(), 500, 350);
@@ -42,6 +46,7 @@ public class loginController {
             showAlert(Alert.AlertType.ERROR, "Login Failed", "Invalid email or password.");
         }
     }
+
 
     private void showAlert(Alert.AlertType alertType, String title, String message) {
         Alert alert = new Alert(alertType);

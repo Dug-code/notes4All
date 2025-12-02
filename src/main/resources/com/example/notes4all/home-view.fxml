@@ -6,19 +6,46 @@
 
 <AnchorPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.example.notes4all.homeController"
-            prefWidth="500" prefHeight="350">
+            prefWidth="700" prefHeight="400">
 
-    <VBox alignment="CENTER" spacing="20"
-          AnchorPane.topAnchor="20.0"
-          AnchorPane.leftAnchor="20.0"
-          AnchorPane.rightAnchor="20.0">
-        <Label text="Welcome to Notes4All!" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
-        <Label fx:id="welcomeLabel" text="User: " style="-fx-font-size: 16px;"/>
+    <SplitPane dividerPositions="0.65" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0"
+               AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0">
 
-        <Button text="Open Notes" onAction="#onOpenNotesClick"/>
-        <Button text="View Profile" onAction="#onOpenProfileClick"
-                style="-fx-background-color: #2196F3; -fx-text-fill: white;"/>
-        <Button text="Logout" onAction="#onLogoutButtonClick"/>
-    </VBox>
+        <!-- Left: Main User Area -->
+        <VBox alignment="CENTER" spacing="20">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
+
+            <Label text="Welcome to Notes4All!" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+            <Label fx:id="welcomeLabel" text="User: " style="-fx-font-size: 16px;"/>
+
+            <Button text="Open Notes" onAction="#onOpenNotesClick"/>
+            <Button text="View Profile" onAction="#onOpenProfileClick" style="-fx-background-color: #2196F3; -fx-text-fill: white;"/>
+            <Button text="Logout" onAction="#onLogoutButtonClick"/>
+        </VBox>
+
+        <!-- Right: Friends Panel -->
+        <VBox spacing="10">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
+
+            <Label text="Friends" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+
+            <!-- List of friends -->
+            <ListView fx:id="friendsListView" prefHeight="200"/>
+
+            <!-- Add new friend -->
+            <HBox spacing="5">
+                <TextField fx:id="newFriendField" promptText="Friend's username" HBox.hgrow="ALWAYS"/>
+                <Button text="Add Friend" onAction="#onAddFriendClick"/>
+            </HBox>
+
+            <!-- Send note to selected friend -->
+            <Button text="Send Note" onAction="#onSendNoteClick"/>
+        </VBox>
+    </SplitPane>
 </AnchorPane>
+
 

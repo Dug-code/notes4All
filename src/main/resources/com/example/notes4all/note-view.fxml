@@ -1,33 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.canvas.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
 <BorderPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.example.notes4all.noteController"
-            prefWidth="800" prefHeight="500">
+            prefWidth="900" prefHeight="500">
 
+    <!-- MAIN APP TOOLBAR -->
     <top>
         <ToolBar>
             <Button text="New Note" onAction="#onNewNoteClick"/>
+
+            <Label text="Name:"/>
+            <TextField fx:id="noteNameField" promptText="Enter note name" prefWidth="150"/>
+
             <Button text="Save Note" onAction="#onSaveNoteClick"/>
-            <Separator orientation="VERTICAL"/>
-            <Button text="Clear Drawing" onAction="#onClearDrawingClick"/>
-            <Button text="Save Drawing" onAction="#onSaveDrawingClick"/>
         </ToolBar>
     </top>
 
-    <center>
-        <SplitPane dividerPositions="0.5">
-            <!-- Text area -->
-            <TextArea fx:id="noteArea" promptText="Write your notes here..." wrapText="true"/>
+    <!-- SIDEBAR WITH SAVED NOTES -->
+    <left>
+        <VBox spacing="5" prefWidth="220">
+            <Label text="Saved Notes:"/>
+            <ListView fx:id="noteListView" onMouseClicked="#onListClick"/>
+        </VBox>
+    </left>
 
-            <!-- Drawing canvas -->
-            <AnchorPane>
-                <Canvas fx:id="drawCanvas" width="400" height="400" />
-            </AnchorPane>
-        </SplitPane>
+    <!-- CENTER: NOTE TEXT AREA + ITS OWN TOOLBAR -->
+    <center>
+        <VBox spacing="5">
+
+            <!-- NOTE-ONLY TOOLBAR -->
+            <ToolBar>
+                <Label text="Text Color:"/>
+                <ColorPicker fx:id="textColorPicker" onAction="#onColorChange"/>
+            </ToolBar>
+
+            <!-- TEXT AREA -->
+            <TextArea fx:id="noteArea"
+                      promptText="Write your notes here..."
+                      wrapText="true"
+                      VBox.vgrow="ALWAYS"/>
+        </VBox>
     </center>
+
 </BorderPane>
+
+
+
+
+
+
+
 
