@@ -2,6 +2,7 @@ module com.example.notes4all {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.desktop;
+    requires javafx.web;
     requires firebase.admin;
     requires com.google.auth.oauth2;
     requires google.cloud.firestore;
