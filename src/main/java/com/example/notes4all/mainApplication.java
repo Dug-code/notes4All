@@ -22,7 +22,7 @@ public class mainApplication extends Application {
 
 
         FXMLLoader fxmlLoader = new FXMLLoader(mainApplication.class.getResource("login-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 400, 300);
+        Scene scene = new Scene(fxmlLoader.load(), 700, 400);
         stage.setTitle("Login - Notes4All");
         stage.setScene(scene);
         stage.show();

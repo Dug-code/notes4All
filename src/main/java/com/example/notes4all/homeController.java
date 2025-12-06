@@ -51,6 +51,8 @@ public class homeController {
         });
     }
 
+
+
     public void setUser(String username) {
         currentUsername = username;
         welcomeLabel.setText("User: " + username);
