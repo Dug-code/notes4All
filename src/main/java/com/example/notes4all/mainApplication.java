@@ -1,34 +1,57 @@
 package com.example.notes4all;
 
-import com.google.cloud.firestore.Firestore;
-import com.google.firebase.auth.FirebaseAuth;
+import com.example.notes4all.util.FirebaseConfig;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.io.IOException;
+import java.net.URL;
 
 public class mainApplication extends Application {
-    public static Firestore fstore;
-    public static FirebaseAuth fauth;
-    private final FirestoreContext contxtFirebase = new FirestoreContext();
-
+    public static Scene scene;
 
     @Override
-    public void start(Stage stage) throws IOException {
-        fstore = contxtFirebase.firebase();
-        fauth = FirebaseAuth.getInstance();
+    public void start(Stage stage) {
+        try {
+            FirebaseConfig.initialize();
+
+            URL url = mainApplication.class.getResource("/com/example/notes4all/views/login.fxml"
+            );
 
 
-        FXMLLoader fxmlLoader = new FXMLLoader(mainApplication.class.getResource("login-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 700, 400);
-        stage.setTitle("Login - Notes4All");
-        stage.setScene(scene);
-        stage.show();
+            if (url == null) {
+                throw new RuntimeException("Cannot find: /com.example.notes4all/views/login.fxml");
+            }
+
+            Parent root = FXMLLoader.load(url);
+            scene = new Scene(root, 700, 400);
+
+            stage.setTitle("Login - Notes4All");
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (Exception e) {
+            System.out.println("Failed to start app");
+            e.printStackTrace();
+        }
     }
 
-    public static void main(String[] args) {
-        launch();
+    public static void setRoot(String fxml) {
+        try {
+            Parent root = FXMLLoader.load(
+                    mainApplication.class.getResource("/com/example/notes4all/views/" + fxml)
+            );
+            scene.setRoot(root);
+            System.out.println("Loading view: " + fxml);
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+
+
+    public static void main(String[] args) {launch();}
 }

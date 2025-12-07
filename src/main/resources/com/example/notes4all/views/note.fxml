@@ -12,7 +12,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="400" prefWidth="700" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.notes4all.noteController">
+<BorderPane prefHeight="400" prefWidth="700" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.notes4all.controller.noteController">
 
     <!-- MAIN APP TOOLBAR -->
     <top>

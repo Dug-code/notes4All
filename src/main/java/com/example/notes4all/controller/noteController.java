@@ -1,9 +1,8 @@
-package com.example.notes4all;
+package com.example.notes4all.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
-import javafx.scene.web.HTMLEditor;
 
 import java.io.File;
 import java.io.FileWriter;

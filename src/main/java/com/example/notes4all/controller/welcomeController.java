@@ -1,4 +1,4 @@
-package com.example.notes4all;
+package com.example.notes4all.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
