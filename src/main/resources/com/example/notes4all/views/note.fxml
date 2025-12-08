@@ -12,7 +12,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="400" prefWidth="700" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.notes4all.controller.noteController">
+<BorderPane prefHeight="400" prefWidth="700" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.notes4all.controller.noteController">
 
     <!-- MAIN APP TOOLBAR -->
     <top>
@@ -36,7 +36,7 @@
     <left>
         <VBox prefWidth="220" spacing="5" style="-fx-background-color: lightblue;">
             <Label prefHeight="28.0" prefWidth="85.0" text=" Saved Notes :" />
-            <Line endX="181.2928924560547" endY="-1.2426408529281616" opacity="0.0" startX="-100.0" />
+            <Line endX="183.2929229736328" endY="12.092878341674805" opacity="0.0" startX="-100.0" />
             <ListView fx:id="noteListView" onMouseClicked="#onListClick" prefHeight="436.0" prefWidth="283.0" />
         </VBox>
     </left>
