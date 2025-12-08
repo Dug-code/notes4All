@@ -167,7 +167,7 @@ public class homeController {
             Scene scene = new Scene(loader.load(), 600, 400);
 
             noteController controller = loader.getController();
-            controller.setRecipient(selectedFriend); // pass friend as recipient
+           // broke controller.setRecipient(selectedFriend); // pass friend as recipient
 
             Stage noteStage = new Stage();
             noteStage.setScene(scene);

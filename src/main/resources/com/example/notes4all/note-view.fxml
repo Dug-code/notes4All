@@ -2,50 +2,73 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.web.HTMLEditor?>
 
 <BorderPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.example.notes4all.noteController"
-            prefWidth="900" prefHeight="500">
+            prefWidth="900" prefHeight="600">
 
     <!-- MAIN APP TOOLBAR -->
     <top>
         <ToolBar>
+
             <Button text="New Note" onAction="#onNewNoteClick"/>
 
             <Label text="Name:"/>
-            <TextField fx:id="noteNameField" promptText="Enter note name" prefWidth="150"/>
+            <TextField fx:id="noteNameField" promptText="Enter note name" prefWidth="160"/>
 
-            <Button text="Save Note" onAction="#onSaveNoteClick"/>
+            <Button text="Save (HTML)" onAction="#onSaveNoteClick"/>
+            <Button text="Save as DOCX" onAction="#onSaveAsDocxClick"/>
+            <Button text="Save as PDF" onAction="#onSaveAsPDFClick"/>
+
+            <Separator/>
+
+            <Label text="Search:"/>
+            <TextField fx:id="searchField" promptText="Find text..." onAction="#onSearch" prefWidth="120"/>
+
+            <Separator/>
+
+            <Button text="Theme" onAction="#onThemeToggle"/>
         </ToolBar>
     </top>
 
     <!-- SIDEBAR WITH SAVED NOTES -->
     <left>
-        <VBox spacing="5" prefWidth="220">
+        <VBox spacing="5" prefWidth="220" style="-fx-padding:10;">
             <Label text="Saved Notes:"/>
-            <ListView fx:id="noteListView" onMouseClicked="#onListClick"/>
+            <ListView fx:id="noteListView" onMouseClicked="#onListClick" VBox.vgrow="ALWAYS"/>
         </VBox>
     </left>
 
-    <!-- CENTER: NOTE TEXT AREA + ITS OWN TOOLBAR -->
+    <!-- CENTER EDITOR AREA -->
     <center>
-        <VBox spacing="5">
+        <VBox spacing="5" style="-fx-padding:10;">
 
-            <!-- NOTE-ONLY TOOLBAR -->
+            <!-- CUSTOM FORMATTING TOOLBAR -->
             <ToolBar>
-                <Label text="Text Color:"/>
+                <Button text="Insert Image" onAction="#onInsertImageClick"/>
+
+                <Separator/>
+
+                <Label text="Color:"/>
                 <ColorPicker fx:id="textColorPicker" onAction="#onColorChange"/>
+
+                <Separator/>
+
+                <Label text="Font Size:"/>
+                <ComboBox fx:id="fontSizeBox" prefWidth="80" onAction="#onFontSize"/>
+
+                <Label text="Font:"/>
+                <ComboBox fx:id="fontFamilyBox" prefWidth="140" onAction="#onFontFamily"/>
             </ToolBar>
 
-            <!-- TEXT AREA -->
-            <TextArea fx:id="noteArea"
-                      promptText="Write your notes here..."
-                      wrapText="true"
-                      VBox.vgrow="ALWAYS"/>
+            <HTMLEditor fx:id="htmlEditor" VBox.vgrow="ALWAYS"/>
         </VBox>
     </center>
 
 </BorderPane>
+
+
 
 
 
