@@ -32,6 +32,23 @@ public class noteController {
         this.recipient = recipient;
     }
 
+    @FXML
+    protected void onDeleteNoteClick() {
+        String selected = noteListView.getSelectionModel().getSelectedItem();
+
+        if (selected == null) {
+            showAlert("Please select a note from the list first!");
+            return;
+        }
+
+        Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
+        confirm.setContentText("Permanently delete '" + selected + "'?");
+        confirm.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.OK) {
+                deleteNote(selected);
+            }
+        });
+    }
 
     @FXML
     public void initialize() {

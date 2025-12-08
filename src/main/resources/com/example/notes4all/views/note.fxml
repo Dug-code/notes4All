@@ -28,7 +28,14 @@
             <Button onAction="#onSaveNoteClick" text="Save Note">
                 <font>
                     <Font size="13.0" />
-                </font></Button>
+                </font>
+            </Button>
+            <Button onAction="#onDeleteNoteClick" text="Delete Note"
+                    style="-fx-background-color: #ff4444; -fx-text-fill: white;">
+                <font>
+                    <Font size="13.0" />
+                </font>
+            </Button>
         </ToolBar>
     </top>
 
