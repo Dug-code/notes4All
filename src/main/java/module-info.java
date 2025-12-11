@@ -16,13 +16,15 @@ module com.example.notes4all {
     requires com.google.gson;
     requires java.sql;
 
+    opens com.example.notes4all.model to google.cloud.firestore;
+
 
     opens com.example.notes4all to javafx.fxml;
     exports com.example.notes4all;
     exports com.example.notes4all.model;
-    opens com.example.notes4all.model to javafx.fxml;
     exports com.example.notes4all.controller;
     opens com.example.notes4all.controller to javafx.fxml;
     exports com.example.notes4all.util;
     opens com.example.notes4all.util to javafx.fxml;
+
 }
