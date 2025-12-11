@@ -1,7 +1,7 @@
 Group 3 Proposal Submission
 Group 3: Douglas Bluemel, John Boncukcu, Lochana Subedi, and Daniel Hong
 
-We will be creating a note taking application for students. This application will allow students to add classmates as friends, personalize their profiles and share their notes with each other. It will allow students to either draw their notes or type based on their preference. After they are finished it will allow the user to save, share, and export their work. The aim of this application is to boost communication between students and an easy way for students to take notes.
+We will be creating a note taking application for students. This application will allow students to add classmates as friendUids, personalize their profiles and share their notes with each other. It will allow students to either draw their notes or type based on their preference. After they are finished it will allow the user to save, share, and export their work. The aim of this application is to boost communication between students and an easy way for students to take notes.
 
 World Assumptions
 The user has access to the internet as well as a suitable device such as a computer or smartphone.
@@ -12,7 +12,7 @@ Personalized Profiles
 User-friendly interface
 Access to text writing and drawing board.
 Being able to save, share, and export their work.
-Ability to add friends/classmates
+Ability to add friendUids/classmates
 
 Specifications and Interface Needs
 Responsive application with accessibility across a wide platform of devices

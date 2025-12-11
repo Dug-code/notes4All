@@ -1,45 +1,54 @@
 package com.example.notes4all.controller;
 
+import com.example.notes4all.App;
 import com.example.notes4all.dao.NoteDAO;
 import com.example.notes4all.model.Note;
-import com.google.cloud.Timestamp;
+import com.example.notes4all.util.AlertUtil;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.web.HTMLEditor;
+import javafx.stage.FileChooser;
+import com.lowagie.text.Document;
+import com.lowagie.text.Paragraph;
+import com.lowagie.text.pdf.PdfWriter;
 
+import java.io.File;
+import java.time.Instant;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
-public class noteController {
+public class NoteController {
 
     /* =========================
-       UNDO / REDO
+       UNDO / REDO STACKS
        ========================= */
     private final Deque<String> undoStack = new ArrayDeque<>();
     private final Deque<String> redoStack = new ArrayDeque<>();
     private boolean ignoreChanges = false;
 
     /* =========================
-       FIREBASE STATE
+       CURRENT USER + NOTE STATE
        ========================= */
     private Note currentNote;
-    private String currentUserId; // set this from login!
+    private String currentUserId; // Set via loadNotes()
 
     /* =========================
-       FXML
+       FXML COMPONENTS
        ========================= */
     @FXML private HTMLEditor noteEditor;
     @FXML private TextField noteNameField;
     @FXML private ListView<Note> noteListView;
 
+    /* =========================
+       INITIALIZE
+       ========================= */
     @FXML
     public void initialize() {
 
-        // ✅ Undo snapshot
+        // Auto-capture undo snapshots when typing
         noteEditor.setOnKeyReleased(e -> {
             if (ignoreChanges) return;
 
@@ -50,7 +59,7 @@ public class noteController {
             redoStack.clear();
         });
 
-        // ✅ Display note title in ListView
+        // Display note titles in the ListView
         noteListView.setCellFactory(lv -> new ListCell<>() {
             @Override
             protected void updateItem(Note note, boolean empty) {
@@ -61,7 +70,7 @@ public class noteController {
     }
 
     /* =========================
-       LOAD NOTES
+       LOAD NOTES FOR USER
        ========================= */
     public void loadNotes(String userId) {
         this.currentUserId = userId;
@@ -69,6 +78,7 @@ public class noteController {
         new Thread(() -> {
             try {
                 List<Note> notes = NoteDAO.getMyNotes(userId);
+
                 Platform.runLater(() ->
                         noteListView.getItems().setAll(notes)
                 );
@@ -87,11 +97,11 @@ public class noteController {
 
         ignoreChanges = true;
         noteEditor.setHtmlText("");
+        noteNameField.clear();
         undoStack.clear();
         redoStack.clear();
         ignoreChanges = false;
 
-        noteNameField.clear();
         noteListView.getSelectionModel().clearSelection();
     }
 
@@ -101,41 +111,36 @@ public class noteController {
     @FXML
     protected void onSaveNoteClick() {
         String title = noteNameField.getText().trim();
+
         if (title.isEmpty()) {
-            showAlert("Please enter a note name.");
+            AlertUtil.error("Please enter a note name.");
             return;
         }
 
-        String html = noteEditor.getHtmlText();
+        String content = noteEditor.getHtmlText();
 
         new Thread(() -> {
             try {
                 if (currentNote == null) {
-                    // ✅ New note
+                    // Creating new note
                     currentNote = new Note(
                             currentUserId,
                             title,
-                            html,
-                            Timestamp.now(),
+                            content,
+                            Instant.now().toString(),
                             List.of()
                     );
                     NoteDAO.save(currentNote);
                 } else {
-                    // ✅ Update
-                    NoteDAO.update(
-                            currentNote.getNoteId(),
-                            title,
-                            html
-                    );
+                    // Updating existing note
+                    NoteDAO.update(currentNote.getNoteId(), title, content);
                     currentNote.setTitle(title);
-                    currentNote.setContent(html);
+                    currentNote.setContent(content);
                 }
 
                 loadNotes(currentUserId);
 
-                Platform.runLater(() ->
-                        showAlert("Saved to Firebase ✅")
-                );
+                Platform.runLater(() -> AlertUtil.success("Note saved successfully!"));
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -144,16 +149,14 @@ public class noteController {
     }
 
     /* =========================
-       SELECT NOTE
+       CLICK LIST ITEM
        ========================= */
     @FXML
     protected void onListClick(javafx.scene.input.MouseEvent event) {
-        Note selected = noteListView.getSelectionModel().getSelectedItem();
-        if (selected == null) return;
+        if (event.getButton() != MouseButton.PRIMARY) return;
 
-        if (event.getButton() == MouseButton.PRIMARY) {
-            openNote(selected);
-        }
+        Note selected = noteListView.getSelectionModel().getSelectedItem();
+        if (selected != null) openNote(selected);
     }
 
     private void openNote(Note note) {
@@ -170,10 +173,14 @@ public class noteController {
     /* =========================
        DELETE NOTE
        ========================= */
-    private void deleteNote(Note note) {
+    @FXML
+    protected void onDeleteClick() {
+        Note selected = noteListView.getSelectionModel().getSelectedItem();
+        if (selected == null) return;
+
         new Thread(() -> {
             try {
-                NoteDAO.delete(note.getNoteId());
+                NoteDAO.delete(selected.getNoteId());
                 loadNotes(currentUserId);
 
                 Platform.runLater(this::onNewNoteClick);
@@ -207,20 +214,88 @@ public class noteController {
     }
 
     /* =========================
-       ALERT
+       BACK TO DASHBOARD
        ========================= */
-    private void showAlert(String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Notes4All");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
+    @FXML
+    private void onBackClick() {
+        App.setRoot("dashboard");
     }
+
+    public void openNoteFromDashboard(Note note) {
+        this.currentNote = note; // includes noteId
+        ignoreChanges = true;
+        noteEditor.setHtmlText(note.getContent());
+        noteNameField.setText(note.getTitle());
+        undoStack.clear();
+        redoStack.clear();
+        ignoreChanges = false;
+    }
+
+
+    @FXML
+    private void onShareNoteClick() {
+        if (currentNote == null) {
+            AlertUtil.error("Save the note before sharing it.");
+            return;
+        }
+
+        // Ask for friend username
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Share Note");
+        dialog.setHeaderText("Enter your friend's username:");
+        dialog.setContentText("Username:");
+
+        dialog.showAndWait().ifPresent(username -> {
+            boolean success = NoteDAO.shareNoteWithUser(currentNote.getNoteId(), username);
+
+            if (success) {
+                AlertUtil.success("Note successfully shared with " + username + "!");
+            } else {
+                AlertUtil.error("Failed to share note — user may not exist.");
+            }
+        });
+    }
+
+    @FXML
+    private void onExportPdfClick() {
+        if (currentNote == null) {
+            AlertUtil.error("Please select or create a note first.");
+            return;
+        }
+
+        FileChooser chooser = new FileChooser();
+        chooser.setTitle("Save Note as PDF");
+        chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF File", "*.pdf"));
+
+        File file = chooser.showSaveDialog(null);
+        if (file == null) return;
+
+        try {
+            exportNoteToPdf(currentNote, file.getAbsolutePath());
+            AlertUtil.success("PDF exported successfully!");
+        } catch (Exception e) {
+            e.printStackTrace();
+            AlertUtil.error("Failed to export PDF.");
+        }
+    }
+
+    private void exportNoteToPdf(Note note, String filePath) throws Exception {
+        String title = note.getTitle();
+        String contentHtml = note.getContent();
+
+        // Very simple HTML → text conversion
+        String textContent = contentHtml.replaceAll("<[^>]*>", "");
+
+        com.lowagie.text.Document document = new com.lowagie.text.Document();
+        com.lowagie.text.pdf.PdfWriter.getInstance(document, new java.io.FileOutputStream(filePath));
+
+        document.open();
+        document.add(new com.lowagie.text.Paragraph(title));
+        document.add(new com.lowagie.text.Paragraph("\n"));
+        document.add(new com.lowagie.text.Paragraph(textContent));
+        document.close();
+    }
+
+
+
 }
-
-
-
-
-
-
-

@@ -1,46 +1,43 @@
 package com.example.notes4all.model;
 
-import com.google.cloud.Timestamp;
+import java.util.List;
 
 public class User {
+
     private String uid;
     private String username;
+    private String fullName;
     private String email;
-    private Timestamp createdAt;
-    private String status; // online, offline
+    private String bio;
+    private String status;
+    private String createdAt;
+    private List<String> friends;
 
-    public User() {}
+    public User(String uid, String username, String fullName, String email, String bio,
+                String status, String createdAt, List<String> friends) {
 
-    public User(String uid, String username, String email, Timestamp createdAt, String status) {
         this.uid = uid;
         this.username = username;
+        this.fullName = fullName;
         this.email = email;
-        this.createdAt = createdAt;
+        this.bio = bio;
         this.status = status;
+        this.createdAt = createdAt;
+        this.friends = friends;
     }
 
-    public String getUid() {return uid;}
+    public String getUid() { return uid; }
+    public String getUsername() { return username; }
+    public String getFullName() { return fullName; }
+    public String getEmail() { return email; }
+    public String getBio() { return bio; }
+    public String getStatus() { return status; }
+    public String getCreatedAt() { return createdAt; }
+    public List<String> getFriends() { return friends; }
 
-    public void setUid(String uid) {this.uid = uid;}
-
-    public String getUsername() {return username;}
-
-    public void setUsername(String username) {this.username = username;}
-
-    public String getEmail() {return email;}
-
-    public void setEmail(String email) {this.email = email;}
-
-    public Timestamp getCreatedAt() {return createdAt;}
-
-    public void setCreatedAt(Timestamp createdAt) {this.createdAt = createdAt;}
-
-    public String getStatus() {return status;}
-
-    public void setStatus(String status) {this.status = status;}
-
-    @Override
-    public String toString() {
-        return username + " (" + email + ")";
-    }
+    public void setUsername(String username) { this.username = username; }
+    public void setFullName(String fullName) { this.fullName = fullName; }
+    public void setBio(String bio) { this.bio = bio; }
+    public void setStatus(String status) { this.status = status; }
+    public void setFriends(List<String> friendUids) { this.friends = friends; }
 }

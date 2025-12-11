@@ -1,66 +1,366 @@
 package com.example.notes4all.dao;
 
+import com.example.notes4all.util.FirebaseConstants;
 import com.example.notes4all.model.User;
-import com.google.cloud.Timestamp;
-import com.google.cloud.firestore.DocumentSnapshot;
-import com.google.cloud.firestore.Firestore;
-import com.google.firebase.cloud.FirestoreClient;
+import com.example.notes4all.service.Session;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.ExecutionException;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserDAO {
 
-    public static void createProfile(String uid, String email, String username)
-            throws ExecutionException, InterruptedException {
+    private static final HttpClient client = HttpClient.newHttpClient();
 
-        Firestore db = FirestoreClient.getFirestore();
+    public static boolean createUserDocument(User user) {
+        try {
+            String url = FirebaseConstants.FIRESTORE_BASE_URL + "/users?documentId=" + user.getUid();
 
-        Map<String, Object> data = new HashMap<>();
-        data.put("uid", uid);
-        data.put("email", email);
-        data.put("username", username);
-        data.put("createdAt", Timestamp.now());
-        data.put("status", "offline");
-
-        db.collection("users").document(uid).set(data).get();
-    }
-
-    public static User getById(String uid)
-            throws ExecutionException, InterruptedException {
-
-        Firestore db = FirestoreClient.getFirestore();
-
-        DocumentSnapshot doc =
-                db.collection("users").document(uid).get().get();
-
-        if (doc.exists()) {
-            return doc.toObject(User.class);
+            String body = """
+        {
+          "fields": {
+            "uid": {"stringValue": "%s"},
+            "email": {"stringValue": "%s"},
+            "username": {"stringValue": "%s"},
+            "fullName": {"stringValue": "%s"},
+            "bio": {"stringValue": "%s"},
+            "status": {"stringValue": "%s"},
+            "createdAt": {"timestampValue": "%s"},
+            "friends": {"arrayValue": {"values": []}}
+          }
         }
+        """.formatted(
+                    user.getUid(),
+                    user.getEmail(),
+                    user.getUsername(),
+                    user.getFullName(),
+                    user.getBio(),
+                    user.getStatus(),
+                    user.getCreatedAt()
+            );
 
-        return null;
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(url))
+                    .header("Authorization", "Bearer " + Session.getIdToken())
+                    .header("Content-Type", "application/json")
+                    .POST(HttpRequest.BodyPublishers.ofString(body))
+                    .build();
+
+            String response = client.send(request, HttpResponse.BodyHandlers.ofString()).body();
+
+            System.out.println("CREATE USER RESPONSE: " + response);
+
+            return !response.contains("error");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
-    public static void updateUsername(String uid, String newUsername)
-            throws ExecutionException, InterruptedException {
 
-        Firestore db = FirestoreClient.getFirestore();
+    public static User getUserProfile(String uid) {
+        try {
+            String url = FirebaseConstants.FIRESTORE_BASE_URL + "/users/" + uid;
 
-        Map<String, Object> update = new HashMap<>();
-        update.put("username", newUsername);
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(url))
+                    .header("Authorization", "Bearer " + Session.getIdToken())
+                    .GET()
+                    .build();
 
-        db.collection("users").document(uid).update(update).get();
+            String json = client.send(request, HttpResponse.BodyHandlers.ofString()).body();
+            System.out.println("RAW PROFILE JSON for " + uid + ": " + json);
+            JSONObject root = new JSONObject(json);
+
+            JSONObject f = root.getJSONObject("fields");
+
+            String username = f.getJSONObject("username").getString("stringValue");
+            String fullName = f.getJSONObject("fullName").getString("stringValue");
+            String email = f.getJSONObject("email").getString("stringValue");
+            String bio = f.getJSONObject("bio").getString("stringValue");
+            String status = f.getJSONObject("status").getString("stringValue");
+            String createdAt = f.getJSONObject("createdAt").getString("timestampValue");
+
+            // Friends array
+            List<String> friends = new ArrayList<>();
+            if (f.getJSONObject("friends").getJSONObject("arrayValue").has("values")) {
+                JSONArray arr = f.getJSONObject("friends").getJSONObject("arrayValue").getJSONArray("values");
+                for (int i = 0; i < arr.length(); i++) {
+                    friends.add(arr.getJSONObject(i).getString("stringValue"));
+                }
+            }
+
+
+
+            return new User(uid, username, fullName, email, bio, status, createdAt, friends);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
-    public static void updateStatus(String uid, String status)
-            throws ExecutionException, InterruptedException {
 
-        Firestore db = FirestoreClient.getFirestore();
+    public static boolean updateUserProfile(User user) {
+        try {
+            String url = FirebaseConstants.FIRESTORE_BASE_URL +
+                    "/users/" + user.getUid() +
+                    "?updateMask.fieldPaths=username" +
+                    "&updateMask.fieldPaths=fullName" +
+                    "&updateMask.fieldPaths=bio";
 
-        Map<String, Object> update = new HashMap<>();
-        update.put("status", status);
+            String body = """
+        {
+          "fields": {
+            "username": {"stringValue": "%s"},
+            "fullName": {"stringValue": "%s"},
+            "bio": {"stringValue": "%s"}
+          }
+        }
+        """.formatted(
+                    user.getUsername(),
+                    user.getFullName(),
+                    user.getBio()
+            );
 
-        db.collection("users").document(uid).update(update).get();
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(url))
+                    .header("Authorization", "Bearer " + Session.getIdToken())
+                    .header("Content-Type", "application/json")
+                    .method("PATCH", HttpRequest.BodyPublishers.ofString(body))
+                    .build();
+
+            String response = client.send(request, HttpResponse.BodyHandlers.ofString()).body();
+            System.out.println("UPDATE RESPONSE: " + response);
+
+            return !response.contains("error");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
+
+
+    public static void updateUserStatus(String status) {
+        try {
+            String uid = Session.getUid();
+            if (uid == null) return;
+
+            String url = FirebaseConstants.FIRESTORE_BASE_URL +
+                    "/users/" + uid +
+                    "?updateMask.fieldPaths=status";
+
+            String body = """
+        {
+          "fields": {
+            "status": {"stringValue": "%s"}
+          }
+        }
+        """.formatted(status);
+
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(url))
+                    .header("Authorization", "Bearer " + Session.getIdToken())
+                    .header("Content-Type", "application/json")
+                    .method("PATCH", HttpRequest.BodyPublishers.ofString(body))
+                    .build();
+
+            String response = client.send(request, HttpResponse.BodyHandlers.ofString()).body();
+            System.out.println("STATUS UPDATE RESPONSE: " + response);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static User getUserByUsername(String username) {
+        try {
+            String url = FirebaseConstants.FIRESTORE_BASE_URL + ":runQuery";
+
+            String body = """
+        {
+          "structuredQuery": {
+            "from": [{"collectionId": "users"}],
+            "where": {
+              "fieldFilter": {
+                "field": {"fieldPath": "username"},
+                "op": "EQUAL",
+                "value": {"stringValue": "%s"}
+              }
+            }
+          }
+        }
+        """.formatted(username);
+
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(url))
+                    .header("Authorization", "Bearer " + Session.getIdToken())
+                    .header("Content-Type", "application/json")
+                    .POST(HttpRequest.BodyPublishers.ofString(body))
+                    .build();
+
+            String response = client.send(request, HttpResponse.BodyHandlers.ofString()).body();
+            JSONArray arr = new JSONArray(response);
+
+            if (arr.length() == 0 || arr.getJSONObject(0).isEmpty()) return null;
+
+            JSONObject doc = arr.getJSONObject(0).getJSONObject("document");
+            return parseUser(doc);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static boolean addFriend(String myUid, String friendUid) {
+        try {
+            String url = FirebaseConstants.FIRESTORE_BASE_URL +
+                    "/users/" + myUid +
+                    "?updateMask.fieldPaths=friends";
+
+            String body = """
+        {
+          "fields": {
+            "friends": {
+              "arrayValue": {
+                "values": [
+                  { "stringValue": "%s" }
+                ]
+              }
+            }
+          }
+        }
+        """.formatted(friendUid);
+
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(url))
+                    .header("Authorization", "Bearer " + Session.getIdToken())
+                    .header("Content-Type", "application/json")
+                    .method("PATCH", HttpRequest.BodyPublishers.ofString(body))
+                    .build();
+
+            String response = client.send(request, HttpResponse.BodyHandlers.ofString()).body();
+            System.out.println("ADD FRIEND RESPONSE: " + response);
+
+            return !response.contains("error");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
+
+
+
+    private static User parseUser(JSONObject root) {
+        try {
+            JSONObject fields = root.getJSONObject("fields");
+
+            String uid = getString(fields, "uid");
+            String username = getString(fields, "username");
+            String fullName = getString(fields, "fullName");
+            String email = getString(fields, "email");
+            String bio = getString(fields, "bio");
+            String status = getString(fields, "status");
+            String createdAt = getString(fields, "createdAt");
+
+            // Parse friendUids array
+            List<String> friendUids = new ArrayList<>();
+
+            if (fields.has("friends")) {
+                JSONObject arrayObj = fields.getJSONObject("friends").getJSONObject("arrayValue");
+
+                if (arrayObj.has("values")) {
+                    JSONArray arr = arrayObj.getJSONArray("values");
+                    for (int i = 0; i < arr.length(); i++) {
+                        friendUids.add(arr.getJSONObject(i).getString("stringValue"));
+                    }
+                }
+            }
+
+            return new User(
+                    uid,
+                    username,
+                    fullName,
+                    email,
+                    bio,
+                    status,
+                    createdAt,
+                    friendUids
+            );
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private static String getString(JSONObject fields, String key) {
+        if (!fields.has(key)) return "";
+        JSONObject obj = fields.getJSONObject(key);
+        return obj.optString("stringValue", obj.optString("timestampValue", ""));
+    }
+
+    public static String getUidByUsername(String username) {
+        try {
+            String url = FirebaseConstants.FIRESTORE_BASE_URL +
+                    ":runQuery";
+
+            String body = """
+        {
+          "structuredQuery": {
+            "from": [{ "collectionId": "users" }],
+            "where": {
+              "fieldFilter": {
+                "field": { "fieldPath": "username" },
+                "op": "EQUAL",
+                "value": { "stringValue": "%s" }
+              }
+            },
+            "limit": 1
+          }
+        }
+        """.formatted(username);
+
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(url))
+                    .header("Authorization", "Bearer " + Session.getIdToken())
+                    .header("Content-Type", "application/json")
+                    .POST(HttpRequest.BodyPublishers.ofString(body))
+                    .build();
+
+            String json = client.send(request, HttpResponse.BodyHandlers.ofString()).body();
+            System.out.println("UID LOOKUP RESPONSE: " + json);
+
+            JSONArray arr = new JSONArray(json);
+
+            if (arr.isEmpty())
+                return null;
+
+            JSONObject docObj = arr.getJSONObject(0).optJSONObject("document");
+            if (docObj == null)
+                return null;
+
+            JSONObject fields = docObj.getJSONObject("fields");
+
+            // UID is the documentId OR stored inside fields
+            return fields.getJSONObject("uid").getString("stringValue");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 }

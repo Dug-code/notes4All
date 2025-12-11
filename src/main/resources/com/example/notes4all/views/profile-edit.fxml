@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.notes4all.controller.ProfileEditController"
+            prefWidth="700" prefHeight="480"
+            style="-fx-background-color: #fafafa;">
+
+    <!-- ========================= TOP BAR ========================= -->
+    <top>
+        <HBox alignment="CENTER_LEFT"
+              spacing="20"
+              style="-fx-padding: 20; -fx-background-color: #f5f5f5; -fx-border-color: #e0e0e0; -fx-border-width: 0 0 1 0;">
+
+            <Button text="← Back"
+                    onAction="#handleBack"
+                    style="-fx-font-size: 14px; -fx-background-color: transparent;" />
+
+            <Label text="Edit Profile"
+                   style="-fx-font-size: 22px; -fx-font-weight: bold;"
+                   HBox.hgrow="ALWAYS" />
+        </HBox>
+    </top>
+
+    <!-- ========================= MAIN CONTENT ========================= -->
+    <center>
+        <VBox spacing="18"
+              alignment="TOP_CENTER"
+              style="-fx-padding: 40;">
+
+            <!-- Username -->
+            <TextField fx:id="usernameField"
+                       promptText="Username"
+                       prefWidth="200"
+                       style="-fx-background-radius: 8; -fx-padding: 10;" />
+
+            <!-- Full Name -->
+            <TextField fx:id="fullNameField"
+                       promptText="Full Name"
+                       prefWidth="200"
+                       style="-fx-background-radius: 8; -fx-padding: 10;" />
+
+            <!-- Bio -->
+            <TextField fx:id="bioField"
+                       promptText="Bio"
+                       prefWidth="200"
+                       style="-fx-background-radius: 8; -fx-padding: 10;" />
+
+            <Button text="Save Changes"
+                    onAction="#handleSave"
+                    prefWidth="200"
+                    style="
+                        -fx-background-color: #4a76e8;
+                        -fx-text-fill: white;
+                        -fx-font-size: 14px;
+                        -fx-background-radius: 8;
+                        -fx-padding: 10;
+                    " />
+        </VBox>
+    </center>
+
+</BorderPane>
