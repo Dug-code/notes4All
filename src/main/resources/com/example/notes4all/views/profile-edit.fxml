@@ -57,7 +57,7 @@
             <!-- Bio -->
             <TextField fx:id="bioField" prefWidth="200" promptText="Bio" style="-fx-background-radius: 8; -fx-padding: 10;" />
 
-            <Button onAction="#handleSave" prefHeight="42.0" prefWidth="672.0" style="                         -fx-background-color: #4a76e8;                         -fx-text-fill: white;                         -fx-font-size: 14px;                         -fx-background-radius: 8;                         -fx-padding: 10;                     " text="Save Changes" />
+            <Button onAction="#handleSave" prefHeight="42.0" prefWidth="672.0" style="-fx-background-color: lightgrey; -fx-border-color: grey; -fx-text-fill: white; -fx-font-size: 14px; -fx-background-radius: 8; -fx-padding: 10;" text="Save Changes" />
         </VBox>
     </center>
 
