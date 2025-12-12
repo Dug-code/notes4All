@@ -22,9 +22,10 @@ public class App extends Application {
             }
 
             Parent root = FXMLLoader.load(url);
-            scene = new Scene(root, 700, 400);
+            scene = new Scene(root, 750, 600);
 
-            stage.setTitle("Login - Notes4All");
+
+            stage.setTitle("Notes4All");
             stage.setScene(scene);
             stage.show();
 
