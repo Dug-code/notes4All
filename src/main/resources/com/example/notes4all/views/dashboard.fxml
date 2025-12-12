@@ -27,11 +27,11 @@
             </children>
          </AnchorPane> <!-- Spacer -->
 
-            <Button maxWidth="Infinity" onAction="#handleEditProfile" prefHeight="50.0" prefWidth="130.0" text="Edit Profile" textFill="WHITE">
+            <Button maxWidth="Infinity" onAction="#handleEditProfile" prefHeight="50.0" prefWidth="130.0" style="-fx-background-color: lightgrey; -fx-border-color: grey; -fx-background-radius: 0;" text="Edit Profile" textFill="WHITE">
             <font>
                <Font name="System Bold" size="12.0" />
             </font></Button>
-            <Button maxWidth="Infinity" onAction="#handleLogout" prefHeight="50.0" prefWidth="130.0" text="Log Out" textFill="#e12929">
+            <Button maxWidth="Infinity" onAction="#handleLogout" prefHeight="50.0" prefWidth="130.0" style="-fx-background-color: lightgrey; -fx-border-color: grey;" text="Log Out" textFill="#e12929">
             <font>
                <Font name="System Bold" size="12.0" />
             </font></Button>
@@ -51,7 +51,7 @@
 
             <HBox spacing="5">
                 <TextField fx:id="addFriendField" promptText="Add username" HBox.hgrow="ALWAYS" />
-                <Button onAction="#handleAddFriend" text="Add" textFill="WHITE">
+                <Button onAction="#handleAddFriend" style="-fx-background-color: lightgrey; -fx-border-color: grey;" text="Add" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font></Button>
@@ -79,7 +79,7 @@
                      <ListView fx:id="dashboardNotesList" onMouseClicked="#handleDashboardNoteClick" prefHeight="446.0" prefWidth="469.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
                      <children>
-                            <Button layoutX="343.0" layoutY="5.0" onAction="#handleNewNoteClick" prefHeight="45.0" prefWidth="130.0" text="Create New Notes" textFill="WHITE">
+                            <Button layoutX="343.0" layoutY="5.0" onAction="#handleNewNoteClick" prefHeight="45.0" prefWidth="130.0" style="-fx-background-color: lightgrey; -fx-border-color: grey; -fx-background-radius: 6;" text="Create New Notes" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>

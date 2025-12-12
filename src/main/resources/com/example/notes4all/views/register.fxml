@@ -6,11 +6,19 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400" prefWidth="700" style="-fx-background-color: cadetblue;" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.notes4all.controller.RegisterController">
+<AnchorPane prefHeight="600.0" prefWidth="750.0" style="-fx-background-color: cadetblue;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.notes4all.controller.RegisterController">
 
     <VBox alignment="CENTER" layoutX="50.0" layoutY="35.0" prefHeight="231.0" prefWidth="300.0" spacing="10" AnchorPane.bottomAnchor="34.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="35.0">
-        <Label style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Notes4All " textFill="WHITE" />
+      <Label text="- Notes4All -" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="50.0" />
+         </font>
+      </Label>
 
         <TextField fx:id="nameField" maxWidth="200" promptText="Full Name" />
 
@@ -22,10 +30,24 @@
 
         <PasswordField fx:id="confirmPasswordField" maxWidth="200" promptText="Confirm Password" />
 
-        <Button maxWidth="100.0" onAction="#handleRegister" prefHeight="17.0" prefWidth="145.0" text="Register" />
+        <Button defaultButton="true" maxWidth="198.0" onAction="#handleRegister" prefWidth="20.0" style="-fx-border-color: grey; -fx-background-color: lightgrey;" text="Register">
+         <textFill>
+            <LinearGradient endX="1.0" endY="1.0">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color red="1.0" green="1.0" blue="1.0" />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="1.0" green="1.0" blue="1.0" />
+                     </color>
+                  </Stop>
+               </stops>
+            </LinearGradient>
+         </textFill></Button>
 
-        <Button text="Login"
-                onAction="#handleGoToLogin"
-                style="-fx-background-color: transparent; -fx-border-color: transparent;"/>
+        <Button defaultButton="true" onAction="#handleGoToLogin" prefWidth="200.0" style="-fx-background-color: lightgrey; -fx-border-color: grey;" text="Login" textFill="WHITE" />
     </VBox>
 </AnchorPane>
