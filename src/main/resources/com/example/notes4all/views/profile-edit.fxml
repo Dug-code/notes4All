@@ -26,7 +26,7 @@
          </Label>
          <AnchorPane prefHeight="54.0" prefWidth="378.0" />
 
-            <Button defaultButton="true" onAction="#handleBack" prefHeight="42.0" prefWidth="66.0" style="-fx-border-color: white; -fx-background-color: grey;" text="← Back" textFill="WHITE">
+            <Button defaultButton="true" onAction="#handleBack" prefHeight="42.0" prefWidth="66.0" style="-fx-border-color: white; -fx-background-color: dimgrey;" text="← Back" textFill="WHITE">
             <font>
                <Font name="System Bold" size="12.0" />
             </font>
@@ -77,7 +77,7 @@
             </GridPane>
 
             <!-- Save button -->
-            <Button onAction="#handleSave" prefHeight="42.0" prefWidth="326.0" style="-fx-background-color: grey; -fx-border-color: White; -fx-text-fill: white; -fx-font-size: 14px; -fx-background-radius: 8; -fx-padding: 10;" text="Save Changes" />
+            <Button onAction="#handleSave" prefHeight="42.0" prefWidth="326.0" style="-fx-background-color: dimgrey; -fx-border-color: White; -fx-text-fill: white; -fx-font-size: 14px; -fx-background-radius: 8; -fx-padding: 10;" text="Save Changes" />
 
         </VBox>
     </center>
