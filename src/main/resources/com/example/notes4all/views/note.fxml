@@ -19,37 +19,40 @@
          TOP TOOLBAR
          ========================= -->
     <top>
-        <ToolBar prefHeight="45" style="-fx-background-color: cadetblue;">
+        <ToolBar prefHeight="45" style="-fx-background-color: black;">
 
-            <Button onAction="#onBackClick" prefHeight="26.0" prefWidth="67.0" style="-fx-background-color: lightgrey; -fx-border-color: grey;" text="← Back" textFill="WHITE">
+            <Button onAction="#onBackClick" prefHeight="26.0" prefWidth="67.0" style="-fx-background-color: grey; -fx-border-color: white;" text="← Back" textFill="WHITE">
                 <font><Font size="13" /></font>
             </Button>
 
-            <Separator orientation="VERTICAL" />
+            <Separator orientation="VERTICAL" style="-fx-background-color: slategrey;" />
 
-            <Button onAction="#onUndoClick" text="Undo" textFill="WHITE" />
-            <Button onAction="#onRedoClick" text="Redo" textFill="WHITE" />
+            <Button onAction="#onUndoClick" style="-fx-background-color: grey; -fx-border-color: white;" text="Undo" textFill="WHITE" />
+            <Button onAction="#onRedoClick" style="-fx-background-color: grey; -fx-border-color: white;" text="Redo" textFill="WHITE" />
 
-            <Separator orientation="VERTICAL" />
+            <Separator orientation="VERTICAL" style="-fx-background-color: slategrey;" />
+         <Label text="Name:" textFill="WHITE">
+            <font>
+               <Font name="System Bold" size="13.0" />
+            </font></Label>
 
-            <Button onAction="#onNewNoteClick" text="New Note" textFill="WHITE">
-                <font><Font size="13" /></font>
-            </Button>
-         <Label text="Name:" textFill="WHITE" />
+            <TextField fx:id="noteNameField" prefHeight="23.0" prefWidth="135.0" promptText="Enter note name" style="-fx-background-color: lightgrey;" />
 
-            <TextField fx:id="noteNameField" prefHeight="23.0" prefWidth="150.0" promptText="Enter note name" />
-
-            <Button onAction="#onSaveNoteClick" text="Save Note" textFill="WHITE">
-                <font><Font size="13" /></font>
-            </Button>
-
-            <Button onAction="#onDeleteClick" text="Delete Note" textFill="WHITE">
+            <Button onAction="#onNewNoteClick" style="-fx-background-color: grey; -fx-border-color: white;" text="New Note" textFill="WHITE">
                 <font><Font size="13" /></font>
             </Button>
 
-            <Button onAction="#onExportPdfClick" text="Export PDF" textFill="WHITE" />
+            <Button onAction="#onSaveNoteClick" style="-fx-background-color: grey; -fx-border-color: white;" text="Save Note" textFill="WHITE">
+                <font><Font size="13" /></font>
+            </Button>
 
-            <Button onAction="#onShareNoteClick" text="Share" textFill="WHITE">
+            <Button onAction="#onDeleteClick" style="-fx-background-color: grey; -fx-border-color: white;" text="Delete Note" textFill="WHITE">
+                <font><Font size="13" /></font>
+            </Button>
+
+            <Button onAction="#onExportPdfClick" style="-fx-background-color: grey; -fx-border-color: white;" text="Export PDF" textFill="WHITE" />
+
+            <Button onAction="#onShareNoteClick" style="-fx-background-color: grey; -fx-border-color: white;" text="Share" textFill="WHITE">
                 <font><Font size="13" /></font>
             </Button>
 
@@ -62,7 +65,7 @@
          LEFT SIDEBAR
          ========================= -->
     <left>
-        <VBox prefWidth="230" spacing="8" style="-fx-background-color: lightblue; -fx-padding: 10;">
+        <VBox prefWidth="230" spacing="8" style="-fx-background-color: slategrey; -fx-padding: 10;">
          <AnchorPane prefHeight="54.0" prefWidth="210.0">
             <children>
                <Label layoutY="13.0" prefHeight="30.0" prefWidth="142.0" text="Saved Notes : " textFill="WHITE">
@@ -75,7 +78,7 @@
 
             <Line opacity="0.0" />
 
-            <ListView fx:id="noteListView" onMouseClicked="#onListClick" prefHeight="497.0" prefWidth="210.0" VBox.vgrow="ALWAYS" />
+            <ListView fx:id="noteListView" onMouseClicked="#onListClick" prefHeight="497.0" prefWidth="210.0" style="-fx-background-color: lightgrey;" VBox.vgrow="ALWAYS" />
         </VBox>
     </left>
 
@@ -83,9 +86,9 @@
          CENTER CONTENT
          ========================= -->
     <center>
-        <VBox spacing="5" style="-fx-padding: 10;" VBox.vgrow="ALWAYS">
+        <VBox spacing="5" style="-fx-padding: 10; -fx-background-color: slategrey;" VBox.vgrow="ALWAYS">
 
-            <HTMLEditor fx:id="noteEditor" VBox.vgrow="ALWAYS" />
+            <HTMLEditor fx:id="noteEditor" style="-fx-background-color: lightgrey;" VBox.vgrow="ALWAYS" />
 
         </VBox>
     </center>

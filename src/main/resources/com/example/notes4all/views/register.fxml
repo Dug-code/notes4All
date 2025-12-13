@@ -11,7 +11,7 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="750.0" style="-fx-background-color: cadetblue;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.notes4all.controller.RegisterController">
+<AnchorPane prefHeight="600.0" prefWidth="750.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.notes4all.controller.RegisterController">
 
     <VBox alignment="CENTER" layoutX="50.0" layoutY="35.0" prefHeight="231.0" prefWidth="300.0" spacing="10" AnchorPane.bottomAnchor="34.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="35.0">
       <Label text="- Notes4All -" textFill="WHITE">
@@ -20,17 +20,17 @@
          </font>
       </Label>
 
-        <TextField fx:id="nameField" maxWidth="200" promptText="Full Name" />
+        <TextField fx:id="nameField" maxWidth="200" promptText="Full Name" style="-fx-background-color: lightgrey;" />
 
-        <TextField fx:id="usernameField" maxWidth="200" promptText="Username" />
+        <TextField fx:id="usernameField" maxWidth="200" promptText="Username" style="-fx-background-color: lightgrey;" />
 
-        <TextField fx:id="emailField" maxWidth="200" promptText="Email" />
+        <TextField fx:id="emailField" maxWidth="200" promptText="Email" style="-fx-background-color: lightgrey;" />
 
-        <PasswordField fx:id="passwordField" maxWidth="200" promptText="Password" />
+        <PasswordField fx:id="passwordField" maxWidth="200" promptText="Password" style="-fx-background-color: lightgrey;" />
 
-        <PasswordField fx:id="confirmPasswordField" maxWidth="200" promptText="Confirm Password" />
+        <PasswordField fx:id="confirmPasswordField" maxWidth="200" promptText="Confirm Password" style="-fx-background-color: lightgrey;" />
 
-        <Button defaultButton="true" maxWidth="198.0" onAction="#handleRegister" prefWidth="20.0" style="-fx-border-color: grey; -fx-background-color: lightgrey;" text="Register">
+        <Button defaultButton="true" maxWidth="198.0" onAction="#handleRegister" prefWidth="20.0" style="-fx-border-color: white; -fx-background-color: grey;" text="Register">
          <textFill>
             <LinearGradient endX="1.0" endY="1.0">
                <stops>
@@ -48,6 +48,6 @@
             </LinearGradient>
          </textFill></Button>
 
-        <Button defaultButton="true" onAction="#handleGoToLogin" prefWidth="200.0" style="-fx-background-color: lightgrey; -fx-border-color: grey;" text="Login" textFill="WHITE" />
+        <Button defaultButton="true" onAction="#handleGoToLogin" prefWidth="200.0" style="-fx-background-color: grey; -fx-border-color: white;" text="Login" textFill="WHITE" />
     </VBox>
 </AnchorPane>

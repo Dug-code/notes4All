@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400" prefWidth="700" style="-fx-background-color: cadetblue;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.notes4all.controller.LoginController">
+<AnchorPane prefHeight="400" prefWidth="700" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.notes4all.controller.LoginController">
 
     <VBox alignment="CENTER" layoutX="50.0" layoutY="35.0" prefHeight="231.0" prefWidth="300.0" spacing="10" AnchorPane.bottomAnchor="34.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="35.0">
       <Label prefHeight="74.0" prefWidth="306.0" text="- Notes4All -" textFill="WHITE">
@@ -17,13 +17,13 @@
          </font>
       </Label>
 
-        <TextField fx:id="emailField" maxWidth="200" promptText="Email" />
+        <TextField fx:id="emailField" maxWidth="200" promptText="Email" style="-fx-background-color: lightgrey;" />
 
-        <PasswordField fx:id="passwordField" maxWidth="200" promptText="Password" />
+        <PasswordField fx:id="passwordField" maxWidth="200" promptText="Password" style="-fx-background-color: lightgrey;" />
 
-        <Button defaultButton="true" maxWidth="200" onAction="#handleLogin" text="Login" textFill="WHITE" />
+        <Button defaultButton="true" maxWidth="200" onAction="#handleLogin" style="-fx-background-color: grey; -fx-border-color: white;" text="Login" textFill="WHITE" />
 
-        <Button maxWidth="200.0" onAction="#handleGoToRegister" text="Create an account" textFill="WHITE" />
+        <Button maxWidth="200.0" onAction="#handleGoToRegister" style="-fx-background-color: grey; -fx-border-color: white;" text="Create an account" textFill="WHITE" />
 
     </VBox>
 </AnchorPane>

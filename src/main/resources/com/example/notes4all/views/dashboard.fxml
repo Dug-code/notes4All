@@ -3,6 +3,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
@@ -16,24 +17,28 @@
 <BorderPane prefHeight="600.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.notes4all.controller.DashboardController">
 
     <top>
-        <HBox alignment="CENTER_LEFT" prefHeight="78.0" prefWidth="750.0" spacing="20" style="-fx-padding: 15; -fx-background-color: cadetblue;">
+        <HBox alignment="CENTER_LEFT" prefHeight="78.0" prefWidth="750.0" spacing="20" style="-fx-padding: 15; -fx-background-color: black;">
          <AnchorPane prefHeight="48.0" prefWidth="406.0">
             <children>
-               <Label fx:id="welcomeLabel"
-                      textFill="WHITE"
-                      style="-fx-font-size: 22; -fx-font-weight: bold;">
+               <Label fx:id="welcomeLabel" layoutX="213.0" layoutY="14.0" style="-fx-font-size: 22; -fx-font-weight: bold;" textFill="WHITE">
                   <font>
-                     <Font name="System Bold" size="30.0" />
+                     <Font name="System Bold" size="25.0" />
                   </font>
                </Label>
+               <Label text="Notes4All" textFill="WHITE">
+                  <font>
+                     <Font name="System Bold" size="40.0" />
+                  </font>
+               </Label>
+               <Separator layoutX="202.0" layoutY="4.0" orientation="VERTICAL" prefHeight="48.0" prefWidth="2.0" style="-fx-background-color: slategrey;" />
             </children>
          </AnchorPane> <!-- Spacer -->
 
-            <Button maxWidth="Infinity" onAction="#handleEditProfile" prefHeight="50.0" prefWidth="130.0" style="-fx-background-color: lightgrey; -fx-border-color: grey; -fx-background-radius: 0;" text="Edit Profile" textFill="WHITE">
+            <Button maxWidth="Infinity" onAction="#handleEditProfile" prefHeight="50.0" prefWidth="130.0" style="-fx-background-color: dimgrey; -fx-border-color: grey; -fx-background-radius: 0;" text="Edit Profile" textFill="WHITE">
             <font>
                <Font name="System Bold" size="12.0" />
             </font></Button>
-            <Button maxWidth="Infinity" onAction="#handleLogout" prefHeight="50.0" prefWidth="130.0" style="-fx-background-color: lightgrey; -fx-border-color: grey;" text="Log Out" textFill="#e12929">
+            <Button maxWidth="Infinity" onAction="#handleLogout" prefHeight="50.0" prefWidth="130.0" style="-fx-background-color: dimgrey; -fx-border-color: grey;" text="Log Out" textFill="#ff5e5e">
             <font>
                <Font name="System Bold" size="12.0" />
             </font></Button>
@@ -42,18 +47,18 @@
 
     <!-- ========================= LEFT SIDEBAR (Friends) ========================= -->
     <left>
-        <VBox spacing="10" style="-fx-padding: 20; -fx-background-color: lightblue; -fx-border-color: #dddddd; -fx-border-width: 0 1 0 0;">
+        <VBox spacing="10" style="-fx-padding: 20; -fx-background-color: slategrey; -fx-border-color: #dddddd; -fx-border-width: 0 1 0 0;">
          <AnchorPane prefHeight="30.0" prefWidth="200.0">
             <children>
                <Label prefHeight="27.0" prefWidth="101.0" style="-fx-font-size: 18; -fx-font-weight: bold;" text="Friends" textFill="WHITE" />
             </children>
          </AnchorPane>
 
-            <ListView fx:id="friendsListView" onMouseClicked="#handleFriendClick" prefHeight="400" prefWidth="180" />
+            <ListView fx:id="friendsListView" onMouseClicked="#handleFriendClick" prefHeight="400" prefWidth="180" style="-fx-background-color: lightgrey;" />
 
             <HBox spacing="5">
-                <TextField fx:id="addFriendField" promptText="Add username" HBox.hgrow="ALWAYS" />
-                <Button onAction="#handleAddFriend" style="-fx-background-color: cadetblue; -fx-border-color: grey;" text="Add" textFill="WHITE">
+                <TextField fx:id="addFriendField" promptText="Add username" style="-fx-background-color: lightgrey;" HBox.hgrow="ALWAYS" />
+                <Button onAction="#handleAddFriend" style="-fx-background-color: grey; -fx-border-color: grey;" text="Add" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font></Button>
@@ -63,10 +68,10 @@
     </left>
 
     <center>
-        <VBox prefHeight="406.0" prefWidth="572.0" spacing="15" style="-fx-background-color: lightblue;">
+        <VBox prefHeight="406.0" prefWidth="572.0" spacing="15" style="-fx-background-color: slategrey;">
 
             <!-- TITLE + NEW NOTE BUTTON -->
-            <HBox alignment="CENTER_LEFT" prefHeight="486.0" prefWidth="546.0" spacing="10" style="-fx-background-color: lightblue;">
+            <HBox alignment="CENTER_LEFT" prefHeight="486.0" prefWidth="546.0" spacing="10" style="-fx-background-color: slategrey;">
             <GridPane prefHeight="488.0" prefWidth="482.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="363.2" minWidth="3.2000107765197754" prefWidth="8.799985885620117" />
@@ -78,10 +83,10 @@
               </rowConstraints>
                <children>
          
-                     <ListView fx:id="dashboardNotesList" onMouseClicked="#handleDashboardNoteClick" prefHeight="446.0" prefWidth="469.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
+                     <ListView fx:id="dashboardNotesList" onMouseClicked="#handleDashboardNoteClick" prefHeight="446.0" prefWidth="469.0" style="-fx-background-color: lightgrey;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: slategrey;" GridPane.columnIndex="1">
                      <children>
-                            <Button layoutX="343.0" layoutY="5.0" onAction="#handleNewNoteClick" prefHeight="45.0" prefWidth="130.0" style="-fx-background-color: lightgrey; -fx-border-color: grey; -fx-background-radius: 6;" text="Create New Notes" textFill="WHITE">
+                            <Button layoutX="343.0" layoutY="5.0" onAction="#handleNewNoteClick" prefHeight="45.0" prefWidth="130.0" style="-fx-background-color: dimgrey; -fx-border-color: grey; -fx-background-radius: 6;" text="Create New Notes" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
