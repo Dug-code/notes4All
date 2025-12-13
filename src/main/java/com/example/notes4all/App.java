@@ -1,5 +1,7 @@
 package com.example.notes4all;
 
+import com.example.notes4all.model.User;
+import com.example.notes4all.service.UserService;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -51,7 +53,6 @@ public class App extends Application {
     public static void setSceneRoot(Parent root) {
         scene.setRoot(root);
     }
-
 
     public static void main(String[] args) {launch();}
 }

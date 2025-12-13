@@ -7,6 +7,7 @@ import com.example.notes4all.util.AlertUtil;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 public class ProfileEditController {
@@ -18,7 +19,7 @@ public class ProfileEditController {
     private TextField fullNameField;
 
     @FXML
-    private TextField bioField;
+    private TextArea bioField;
 
     private User currentUser;
 

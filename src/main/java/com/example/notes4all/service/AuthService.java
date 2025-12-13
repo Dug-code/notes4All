@@ -17,7 +17,6 @@ public class AuthService {
             String uid = response.getString("localId");
 
             Session.start(idToken, uid, email);
-            UserService.updateStatus("Online");
 
             return true;
 

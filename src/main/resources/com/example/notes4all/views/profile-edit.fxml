@@ -10,6 +10,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.GridPane?>
 <BorderPane prefHeight="600.0" prefWidth="750.0" style="-fx-background-color: #fafafa;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.notes4all.controller.ProfileEditController">
 
     <!-- ========================= TOP BAR ========================= -->
@@ -37,28 +39,57 @@
 
     <!-- ========================= MAIN CONTENT ========================= -->
     <center>
-        <VBox alignment="TOP_CENTER" spacing="18" style="-fx-padding: 40; -fx-background-color: lightblue;">
-         <AnchorPane prefHeight="46.0" prefWidth="424.0">
-            <children>
-               <Label layoutX="257.0" text="Edit Profile" textFill="WHITE">
-                  <font>
-                     <Font name="System Bold" size="30.0" />
-                  </font>
-               </Label>
-            </children>
-         </AnchorPane>
+        <VBox alignment="CENTER" spacing="25"
+              style="-fx-padding: 40; -fx-background-color: lightblue;">
 
-            <!-- Username -->
-            <TextField fx:id="usernameField" prefWidth="200" promptText="Username" style="-fx-background-radius: 8; -fx-padding: 10;" />
+            <!-- Title -->
+            <Label text="Edit Profile" textFill="WHITE">
+                <font>
+                    <Font name="System Bold" size="30"/>
+                </font>
+            </Label>
 
-            <!-- Full Name -->
-            <TextField fx:id="fullNameField" prefWidth="200" promptText="Full Name" style="-fx-background-radius: 8; -fx-padding: 10;" />
+            <!-- Form -->
+            <GridPane alignment="CENTER" hgap="15" vgap="15">
 
-            <!-- Bio -->
-            <TextField fx:id="bioField" prefWidth="200" promptText="Bio" style="-fx-background-radius: 8; -fx-padding: 10;" />
+                <Label text="Username:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <TextField fx:id="usernameField"
+                           promptText="Username"
+                           prefWidth="250"
+                           GridPane.rowIndex="0"
+                           GridPane.columnIndex="1"/>
 
-            <Button onAction="#handleSave" prefHeight="42.0" prefWidth="672.0" style="-fx-background-color: lightgrey; -fx-border-color: grey; -fx-text-fill: white; -fx-font-size: 14px; -fx-background-radius: 8; -fx-padding: 10;" text="Save Changes" />
+                <Label text="Full Name:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <TextField fx:id="fullNameField"
+                           promptText="Full Name"
+                           prefWidth="250"
+                           GridPane.rowIndex="1"
+                           GridPane.columnIndex="1"/>
+
+                <Label text="Bio:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                <TextArea fx:id="bioField"
+                          promptText="Bio"
+                          prefWidth="250"
+                          prefRowCount="4"
+                          wrapText="true"
+                          GridPane.rowIndex="2"
+                          GridPane.columnIndex="1"/>
+
+            </GridPane>
+
+            <!-- Save button -->
+            <Button text="Save Changes"
+                    prefWidth="300"
+                    onAction="#handleSave"
+                    style="-fx-background-color: lightgrey;
+                       -fx-border-color: grey;
+                       -fx-text-fill: white;
+                       -fx-font-size: 14px;
+                       -fx-background-radius: 8;
+                       -fx-padding: 10;"/>
+
         </VBox>
     </center>
+
 
 </BorderPane>

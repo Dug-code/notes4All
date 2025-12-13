@@ -74,7 +74,6 @@ public class RegisterController {
                 fullName,
                 email,
                 "Hello, I'm new here!",
-                "Online",
                 Instant.now().toString(),
                 new ArrayList<>()
         );

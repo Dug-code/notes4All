@@ -23,7 +23,7 @@
 
         <Button defaultButton="true" maxWidth="200" onAction="#handleLogin" text="Login" textFill="WHITE" />
 
-        <Button defaultButton="true" maxWidth="200.0" onAction="#handleGoToRegister" text="Create an account" textFill="WHITE" />
+        <Button maxWidth="200.0" onAction="#handleGoToRegister" text="Create an account" textFill="WHITE" />
 
     </VBox>
 </AnchorPane>

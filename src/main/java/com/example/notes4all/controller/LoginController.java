@@ -28,7 +28,6 @@ public class LoginController {
 
         if (success) {
             AlertUtil.info("Login successful!");
-            UserService.updateStatus("Online");
 
             try {
                 App.setRoot("dashboard");

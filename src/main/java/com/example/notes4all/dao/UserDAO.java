@@ -30,7 +30,6 @@ public class UserDAO {
             "username": {"stringValue": "%s"},
             "fullName": {"stringValue": "%s"},
             "bio": {"stringValue": "%s"},
-            "status": {"stringValue": "%s"},
             "createdAt": {"timestampValue": "%s"},
             "friends": {"arrayValue": {"values": []}}
           }
@@ -41,7 +40,6 @@ public class UserDAO {
                     user.getUsername(),
                     user.getFullName(),
                     user.getBio(),
-                    user.getStatus(),
                     user.getCreatedAt()
             );
 
@@ -85,7 +83,6 @@ public class UserDAO {
             String fullName = f.getJSONObject("fullName").getString("stringValue");
             String email = f.getJSONObject("email").getString("stringValue");
             String bio = f.getJSONObject("bio").getString("stringValue");
-            String status = f.getJSONObject("status").getString("stringValue");
             String createdAt = f.getJSONObject("createdAt").getString("timestampValue");
 
             // Friends array
@@ -99,7 +96,7 @@ public class UserDAO {
 
 
 
-            return new User(uid, username, fullName, email, bio, status, createdAt, friends);
+            return new User(uid, username, fullName, email, bio, createdAt, friends);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -145,39 +142,6 @@ public class UserDAO {
         } catch (Exception e) {
             e.printStackTrace();
             return false;
-        }
-    }
-
-
-    public static void updateUserStatus(String status) {
-        try {
-            String uid = Session.getUid();
-            if (uid == null) return;
-
-            String url = FirebaseConstants.FIRESTORE_BASE_URL +
-                    "/users/" + uid +
-                    "?updateMask.fieldPaths=status";
-
-            String body = """
-        {
-          "fields": {
-            "status": {"stringValue": "%s"}
-          }
-        }
-        """.formatted(status);
-
-            HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(url))
-                    .header("Authorization", "Bearer " + Session.getIdToken())
-                    .header("Content-Type", "application/json")
-                    .method("PATCH", HttpRequest.BodyPublishers.ofString(body))
-                    .build();
-
-            String response = client.send(request, HttpResponse.BodyHandlers.ofString()).body();
-            System.out.println("STATUS UPDATE RESPONSE: " + response);
-
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
@@ -272,7 +236,6 @@ public class UserDAO {
             String fullName = getString(fields, "fullName");
             String email = getString(fields, "email");
             String bio = getString(fields, "bio");
-            String status = getString(fields, "status");
             String createdAt = getString(fields, "createdAt");
 
             // Parse friendUids array
@@ -295,7 +258,6 @@ public class UserDAO {
                     fullName,
                     email,
                     bio,
-                    status,
                     createdAt,
                     friendUids
             );

@@ -7,6 +7,7 @@ import com.example.notes4all.model.Note;
 import com.example.notes4all.model.User;
 import com.example.notes4all.service.Session;
 import com.example.notes4all.service.UserService;
+import com.example.notes4all.util.AlertUtil;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -45,17 +46,35 @@ public class DashboardController {
 
     @FXML
     private void initialize() {
-        loadCurrentUser();
+        javafx.application.Platform.runLater(this::loadCurrentUser);
         loadFriends();
         loadDashboardNotes();
+        System.out.println(welcomeLabel.getText());
     }
 
     private void loadCurrentUser() {
-        currentUser = UserService.getCurrentUser();
-        if (currentUser != null) {
-            welcomeLabel.setText("Welcome, " + currentUser.getUsername() + "!");
-        }
-    }
+    currentUser = UserService.getCurrentUser();
+
+    if (currentUser == null) return;
+
+    javafx.application.Platform.runLater(() -> {
+        welcomeLabel.setText("Welcome, " + currentUser.getUsername() + "!");
+    });
+}
+
+
+//    private void loadCurrentUser() {
+//        currentUser = UserService.getCurrentUser();
+//        System.out.println("currentUser = " + currentUser);
+//        System.out.println("username = " + (currentUser == null ? null : currentUser.getUsername()));
+//
+//        if (currentUser != null && currentUser.getUsername() != null && !currentUser.getUsername().isBlank()) {
+//            welcomeLabel.setText("Welcome, " + currentUser.getUsername() + "!");
+//        } else {
+//            welcomeLabel.setText("Welcome!");
+//        }
+//    }
+
 
     private void loadFriends() {
         new Thread(() -> {
@@ -127,7 +146,6 @@ public class DashboardController {
     @FXML
     private void handleLogout() {
         Session.clear();
-        UserService.updateStatus("Offline");
         App.setRoot("login");
     }
 
@@ -142,7 +160,7 @@ public class DashboardController {
         String targetUsername = addFriendField.getText().trim();
 
         if (targetUsername.isEmpty()) {
-            System.out.println("No username entered");
+            AlertUtil.error("No username entered");
             return;
         }
 
@@ -150,7 +168,7 @@ public class DashboardController {
 
         // Don't allow adding yourself
         if (targetUsername.equals(currentUser.getUsername())) {
-            System.out.println("You cannot add yourself.");
+            AlertUtil.error("You cannot add yourself.");
             return;
         }
 
@@ -158,7 +176,7 @@ public class DashboardController {
         User friend = UserService.getUserByUsername(targetUsername);
 
         if (friend == null) {
-            System.out.println("User not found: " + targetUsername);
+            AlertUtil.error("User not found: " + targetUsername);
             return;
         }
 
@@ -166,10 +184,10 @@ public class DashboardController {
         boolean success = UserService.addFriend(currentUser.getUid(), friend.getUid());
 
         if (success) {
-            System.out.println("Friend added!");
+            AlertUtil.success("Friend added!");
             loadFriends();
         } else {
-            System.out.println("Failed to add friend.");
+            AlertUtil.error("Failed to add friend.");
         }
     }
 
@@ -179,17 +197,17 @@ public class DashboardController {
         int index = friendsListView.getSelectionModel().getSelectedIndex();
 
         if (index < 0) {
-            System.out.println("No friend selected.");
+            AlertUtil.error("No friend selected.");
             return;
         }
 
         if (friendUids == null || friendUids.isEmpty()) {
-            System.out.println("friendUids is empty — cannot open profile.");
+            AlertUtil.error("friendUids is empty — cannot open profile.");
             return;
         }
 
         if (index >= friendUids.size()) {
-            System.out.println("Index mismatch: index = " + index +
+            AlertUtil.error("Index mismatch: index = " + index +
                     " size = " + friendUids.size());
             return;
         }

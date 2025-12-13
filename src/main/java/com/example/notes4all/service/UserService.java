@@ -21,10 +21,6 @@ public class UserService {
         return getUserProfile(Session.getUid());
     }
 
-    public static void updateStatus(String status) {
-        UserDAO.updateUserStatus(status);
-    }
-
     public static User getUserByUsername(String username) {
         return UserDAO.getUserByUsername(username);
     }

@@ -18,7 +18,6 @@ public class ProfileViewController {
     @FXML private Label usernameLabel;
     @FXML private Label fullNameLabel;
     @FXML private Label bioLabel;
-    @FXML private Label statusLabel;
     @FXML private Label createdAtLabel;
 
     private String viewedUserUid;
@@ -33,7 +32,6 @@ public class ProfileViewController {
         usernameLabel.setText(user.getUsername());
         fullNameLabel.setText(user.getFullName());
         bioLabel.setText(user.getBio());
-        statusLabel.setText(user.getStatus());
 
         // FORMAT CREATED DATE
         try {
